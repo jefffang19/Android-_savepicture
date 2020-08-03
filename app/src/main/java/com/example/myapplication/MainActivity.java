@@ -59,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
         viewPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                findViewById(R.id.savedImg).setVisibility(View.GONE);
+                findViewById(R.id.viewPics).setVisibility(View.GONE);
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.FragmentContainer, ImageFragment.getInstance());
+                fragmentManager.beginTransaction().replace(R.id.FragmentContainer, ImageFragment.getInstance(myFilePath)).commit();
             }
         });
     }
