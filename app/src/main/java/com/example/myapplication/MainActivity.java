@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         viewPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.FragmentContainer, ImageFragment.getInstance());
             }
         });
     }
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 //save file
                 try {
                     assert bitmap != null;
-                    FileOutputStream outputStream = openFileOutput("5.jpg" , Context.MODE_PRIVATE);
+                    FileOutputStream outputStream = openFileOutput(("" + (myFilePath.length + 1) + ".jpg") , Context.MODE_PRIVATE);
                     saveFiles.saveFile(outputStream, bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
