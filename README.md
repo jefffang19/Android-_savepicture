@@ -8,3 +8,4 @@ Work in Progress:
 > 1. Encode
 > 2. Zoom in with finger gesture
 > 3. picture match the ui beter
+> 4. Delete Image
