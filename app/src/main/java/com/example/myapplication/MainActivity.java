@@ -24,7 +24,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     final int imageRequestCode = 1;
-    SaveFiles saveFiles = SaveFiles.newInstance();
+    SaveFiles saveFiles = new SaveFiles();
 
     File[] myFilePath;
 
@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 assert data != null;
                 Uri uri = data.getData();
 
+                Log.d("MainActivity", "uri = " + uri);
+
                 Bitmap bitmap = null;
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 imageView.setImageBitmap(bitmap);
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 Log.d("beforeSaveImg", "done");
+                Log.d("beforeSaveImg", "bitmap size = "+ bitmap.toString());
 
                 //save file
                 try {

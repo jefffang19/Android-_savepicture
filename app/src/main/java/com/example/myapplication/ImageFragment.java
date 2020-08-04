@@ -1,5 +1,8 @@
 package com.example.myapplication;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,12 +15,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class ImageFragment extends Fragment {
 
     ImageView imageView;
     File[] myFilePath;
+    int imgPointer = 0;
     private ImageFragment(File[] files){
         myFilePath = files;
     }
@@ -30,6 +38,28 @@ public class ImageFragment extends Fragment {
         Button prevBtn = view.findViewById(R.id.PreBtn);
         Button nextBtn = view.findViewById(R.id.NextBtn);
 
+        imageView = view.findViewById(R.id.imageView);
+
+        Log.d("BufferInput", "file len = " + myFilePath[11].length());
+
+        //read input image from file
+        byte[] bytes = new byte[(int) myFilePath[11].length()];
+        try {
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(myFilePath[11]));
+            int sucs = bufferedInputStream.read(bytes, 0, bytes.length);
+            bufferedInputStream.close();
+            Log.d("bufferInput", "==" + sucs);
+            Log.d("bufferInput", "bytes = " + bytes.length);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+        imageView.setImageBitmap(bitmap);
+
         //debug
         assert myFilePath != null;
         for (File file : myFilePath) {
@@ -39,7 +69,16 @@ public class ImageFragment extends Fragment {
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(imgPointer >= myFilePath.length) imgPointer = -1;
+                imageView.setImageURI(Uri.fromFile(myFilePath[++imgPointer]));
+            }
+        });
 
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(imgPointer - 1 < 0) imgPointer = myFilePath.length;
+                imageView.setImageURI(Uri.fromFile(myFilePath[--imgPointer]));
             }
         });
 

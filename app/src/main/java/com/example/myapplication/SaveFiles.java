@@ -3,16 +3,16 @@ package com.example.myapplication;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class SaveFiles {
-
-    static SaveFiles newInstance(){
-        return new SaveFiles();
-    }
 
     public void saveFile(final FileOutputStream fileOutputStream, final Bitmap bitmap) throws IOException {
         new Thread(new Runnable() {
@@ -28,7 +28,7 @@ public class SaveFiles {
                     e.printStackTrace();
                 }
             }
-        });
+        }).start();
     }
 
     public byte[] bitmapToByte(Bitmap bitmap){
