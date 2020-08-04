@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.jeff.funapp;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         savePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //update file list before every action
+                myFilePath = getBaseContext().getFilesDir().listFiles();
                 Intent intent =  new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent, imageRequestCode);
@@ -59,7 +59,11 @@ public class MainActivity extends AppCompatActivity {
         viewPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //update file list before every action
+                myFilePath = getBaseContext().getFilesDir().listFiles();
+                if(myFilePath.length == 0) return;
                 findViewById(R.id.savedImg).setVisibility(View.GONE);
+                findViewById(R.id.savePic).setVisibility(View.GONE);
                 findViewById(R.id.viewPics).setVisibility(View.GONE);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.FragmentContainer, ImageFragment.getInstance(myFilePath)).commit();

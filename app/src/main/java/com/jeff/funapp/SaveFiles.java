@@ -1,13 +1,8 @@
-package com.example.myapplication;
+package com.jeff.funapp;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;

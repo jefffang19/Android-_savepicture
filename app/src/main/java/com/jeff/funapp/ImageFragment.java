@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.jeff.funapp;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -40,12 +40,12 @@ public class ImageFragment extends Fragment {
 
         imageView = view.findViewById(R.id.imageView);
 
-        Log.d("BufferInput", "file len = " + myFilePath[11].length());
+        Log.d("BufferInput", "file len = " + myFilePath[imgPointer].length());
 
         //read input image from file
-        byte[] bytes = new byte[(int) myFilePath[11].length()];
+        byte[] bytes = new byte[(int) myFilePath[imgPointer].length()];
         try {
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(myFilePath[11]));
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(myFilePath[imgPointer]));
             int sucs = bufferedInputStream.read(bytes, 0, bytes.length);
             bufferedInputStream.close();
             Log.d("bufferInput", "==" + sucs);
@@ -69,16 +69,16 @@ public class ImageFragment extends Fragment {
         prevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imgPointer >= myFilePath.length) imgPointer = -1;
-                imageView.setImageURI(Uri.fromFile(myFilePath[++imgPointer]));
+                if(imgPointer -1 <= 0) imgPointer = myFilePath.length;
+                imageView.setImageURI(Uri.fromFile(myFilePath[--imgPointer]));
             }
         });
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(imgPointer - 1 < 0) imgPointer = myFilePath.length;
-                imageView.setImageURI(Uri.fromFile(myFilePath[--imgPointer]));
+                if(imgPointer >= myFilePath.length - 1) imgPointer = -1;
+                imageView.setImageURI(Uri.fromFile(myFilePath[++imgPointer]));
             }
         });
 
