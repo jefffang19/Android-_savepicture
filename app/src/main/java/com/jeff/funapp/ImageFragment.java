@@ -1,5 +1,6 @@
 package com.jeff.funapp;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -15,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.github.chrisbanes.photoview.PhotoView;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +26,7 @@ import java.io.IOException;
 
 public class ImageFragment extends Fragment {
 
-    ImageView imageView;
+    PhotoView imageView;
     File[] myFilePath;
     int imgPointer = 0;
     private ImageFragment(File[] files){
@@ -38,7 +41,7 @@ public class ImageFragment extends Fragment {
         Button prevBtn = view.findViewById(R.id.PreBtn);
         Button nextBtn = view.findViewById(R.id.NextBtn);
 
-        imageView = view.findViewById(R.id.imageView);
+        imageView = (PhotoView) view.findViewById(R.id.photo_view);
 
         Log.d("BufferInput", "file len = " + myFilePath[imgPointer].length());
 
